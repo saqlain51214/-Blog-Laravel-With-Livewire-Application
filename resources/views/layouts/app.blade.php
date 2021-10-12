@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Starter</title>
+    <title>{{setting('site_title')}}| {{setting('site_name')}}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -18,10 +18,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/plugins/toastr/toastr.min.css')}}">
-    <livewire:styles/>
+    <link rel="stylesheet" href="{{asset('backend/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+     <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
+ 
+
+    <style>
+        .custom-error .select2-selection{
+            border:none;
+        }
+    </style>
+        
+  
+    @stack('styles')
+
+    <livewire:styles />
+   
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini {{setting('sidebar_collapse') ? 'sidebar-collapse' : '' }} ">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -61,38 +77,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="{{ asset('backend/dist/js/adminlte.min.js')}}"></script>
     <script src="{{ asset('backend/plugins/toastr/toastr.min.js')}}"></script>
+    <script src="https://unpkg.com/moment"></script>
+    <script src="{{ asset('backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- bootstrap color picker -->
+    <script src="{{asset('backend/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             toastr.options = {
-                'positionClass':'toast-bottom-right',
-                'progressBar' :true,
+                'positionClass': 'toast-bottom-right',
+                'progressBar': true,
             }
 
             window.addEventListener('hide-form', event => {
                 $('#form').modal('hide');
-                toastr.success(event.detail.message,'Success!');
+                toastr.success(event.detail.message, 'Success!');
             });
         })
+
     </script>
     <script>
         window.addEventListener('show-form', event => {
-           $('#form').modal('show');
+            $('#form').modal('show');
         });
 
-        window.addEventListener('show-delete-modal', event =>{
+        window.addEventListener('show-delete-modal', event => {
             $('#confirmationModal').modal('show');
         });
 
-        window.addEventListener('hide-delete-modal',event=>{
+        window.addEventListener('hide-delete-modal', event => {
             $('#confirmationModal').modal('hide');
-            toastr.success(event.detail.message,'Success!');
+            toastr.success(event.detail.message, 'Success!');
+        });
+        window.addEventListener('alert', event => {
+            toastr.success(event.detail.message, 'Success!');
         });
 
+        window.addEventListener('updated', event => {
+            toastr.success(event.detail.message, 'Success!');
+        });
+        window.addEventListener('deleted', event => {
+            toastr.success(event.detail.message, 'Success!');
+        });
 
     </script>
-    
-    <livewire:scripts/>
+
+    @stack('js')
+    <livewire:scripts />
 </body>
 
 </html>

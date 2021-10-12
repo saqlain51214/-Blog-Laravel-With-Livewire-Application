@@ -11,11 +11,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('backend/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2"
+                <img src="{{ auth()->user()->avatar_url}}" id="profileImage" class="img-circle elevation-2"
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{auth()->user()->name}}</a>
             </div>
         </div>
 
@@ -47,8 +47,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('admin.appointment')}}" class="nav-link {{ request()->is('admin/appointment') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="{{route('admin.appointments')}}" class="nav-link {{ request()->is('admin/appointments') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-calendar-alt"></i>
                         <p>
                             Appointments
 
@@ -67,8 +67,18 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('admin.setting')}}" class="nav-link {{ request()->is('admin/setting') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="{{route('admin.profile.edit')}}" class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Profile
+
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('admin.settings')}}" class="nav-link {{ request()->is('admin/settings') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cog"></i>
                         <p>
                             Setting
 
@@ -77,13 +87,16 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('admin.logout')}}" class="nav-link {{ request()->is('admin/logout') ? 'active' : '' }}">
+                    <form action="{{route('logout')}}" method="post">
+                        @csrf
+                    <a href="{{route('admin.logout')}}" onclick="event.preventDefault(); this.closest('form').submit();" class="nav-link {{ request()->is('admin/logout') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Logout
 
                         </p>
                     </a>
+                </form>
                 </li>
               
             </ul>
